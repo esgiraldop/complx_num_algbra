@@ -1,0 +1,10 @@
+venv 
+.idea 
+__init__.py
+__pycache__
+*.s3db
+*.csv
+*.xlsx
+*.pdf
+*.zip
+license.txt
