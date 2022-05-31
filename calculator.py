@@ -10,7 +10,6 @@ def decimal_2_frac(num):
     return frac
 
 def format_floatnum(num):
-
     if num - int(num) == 0:
         return int(num)
 
@@ -34,13 +33,17 @@ def real_complx_subs(num_1, num_2):
     # Formatting numbers. If there is a number like "5.0i", it is formatted to "5i"
     return str(real_prt) + ' + ' + str(complx_prt) + 'i'
 
-def complx_subs(num_1, num_2):
-    pass
-    return result
-
 def real_complx_mult(num_1, num_2):
-    pass
-    return result
+    real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    real_prt2, complx_prt2 = real_complx_sepration(num_2)
+    term1 = format_floatnum(float(real_prt1) * float(real_prt2))
+    term2 = format_floatnum(float(real_prt1) * float(complx_prt2))
+    term3 = format_floatnum(float(complx_prt1) * float(real_prt2))
+    term4 = -1 * format_floatnum(float(complx_prt1) * float(complx_prt2)) # Ends up being n*i^2 = -1*n = -n
+    real_prt = term1 + term4
+    complx_prt = term2 + term3
+
+    return str(real_prt) + ' + ' + str(complx_prt) + 'i'
 
 def real_complx_div(num_1, num_2):
     pass
@@ -56,3 +59,5 @@ if __name__ == '__main__':
     print('The result of the sum is: ', result)
     result = real_complx_subs(num_1, num_2)
     print('The result the subtraction is: ', result)
+    result = real_complx_mult(num_1, num_2)
+    print('The result the multiplication is: ', result)
