@@ -5,7 +5,8 @@ def search_middle_sign(num):
     return sign
 
 def real_complx_sepration(num):
-    pattern = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i'
+    # pattern = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i' # Previous pattern. Do not work for only real numbers
+    pattern = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i?' # Current best pattern
     real_prt = re.search(pattern, num).groups()[0]
     complx_part = re.search(pattern, num).groups()[1]
     return real_prt, complx_part
