@@ -62,23 +62,32 @@ def format_floatnum(num):
 
     return num
 
+def format_complx_ouput(num):
+
+    real_prt, complx_prt = real_complx_sepration(num)
+    real_is_zero = any([real_prt == '0', real_prt == '-0', real_prt == '+0'])
+    cmplx_is_zero = any([complx_prt == '0', complx_prt == '-0', complx_prt == '+0'])
+    if real_is_zero:
+        if complx_prt[0] == '+':
+            return complx_prt[1:]
+        return complx_prt
+    elif cmplx_is_zero:
+        if real_prt[0] == '+':
+            return real_prt[1:]
+        return real_prt
+    elif real_is_zero and cmplx_is_zero:
+        return '0'
+    else:
+        return num
+
 def multply_signs(real_prt, complx_prt):
 
     if str(complx_prt)[0] != '-':
         complx_num = str(real_prt) + '+' + str(complx_prt) + 'i'
-        return complx_num
+        return format_complx_ouput(complx_num)
 
     complx_num = str(real_prt) + str(complx_prt) + 'i'
-    return complx_num
-
-# def format_complx_ouput(num):
-#
-#     real_prt, complx_prt = real_complx_sepration(num)
-#     if real_prt == '0':
-#         if complx_prt == '+':
-#             return complx_prt[1:]
-#         return complx_prt
-#     elif complx_prt
+    return format_complx_ouput(complx_num)
 
 def real_complx_sum(num_1, num_2):
     # NOTE TO MYSELF: What if there are decimals?
@@ -114,25 +123,30 @@ def real_complx_div(num_1, num_2):
     real_prt2, complx_prt2 = real_complx_sepration(num_2)
     complx_prt_conjug = format_floatnum(float(complx_prt2) * -1) # For the complex conjugate of num_2 (complx_conj_2)
     complx_conj_2 = multply_signs(real_prt2, complx_prt_conjug)
-    # A complex division is (num1/num2) * (complx_conj_2/complx_conj_2)
+    # The formula of the complex division is (num1/num2) * (complx_conj_2/complx_conj_2)
 
     uppr_term = real_complx_mult(num_1, complx_conj_2)
-    lowr_term = real_complx_mult(num_2, complx_conj_2)
+    lowr_term = real_complx_mult(num_2, complx_conj_2) # This result is always a non-complex number
 
+    uppr_term_real_prt,  uppr_term_cmplx_prt = real_complx_sepration(uppr_term)
 
-    return result
+    real_prt = uppr_term_real_prt + '/' + lowr_term
+    complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
+    return multply_signs(real_prt, complx_prt)
 
 if __name__ == '__main__':
     num_1 = '4+8i'
     num_2 = '5+10i'
-    num_1 = '80+0i'
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    print('The real part is: ', real_prt1)
-    print('The complex part is: ', complx_prt1)
+    # num_2 = '4-8i'
+    # real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    # print('The real part is: ', real_prt1)
+    # print('The complex part is: ', complx_prt1)
     # print('The middle sign is: ', search_middle_sign(num_1))
-    # result = real_complx_sum(num_1, num_2)
-    # print('The result of the sum is: ', result)
-    # result = real_complx_subs(num_1, num_2)
-    # print('The result of the subtraction is: ', result)
-    # result = real_complx_mult(num_1, num_2)
-    # print('The result of the multiplication is: ', result)
+    result = real_complx_sum(num_1, num_2)
+    print('The result of the sum is: ', result)
+    result = real_complx_subs(num_1, num_2)
+    print('The result of the subtraction is: ', result)
+    result = real_complx_mult(num_1, num_2)
+    print('The result of the multiplication is: ', result)
+    result = real_complx_div(num_1, num_2)
+    print('The result of the division is: ', result)
