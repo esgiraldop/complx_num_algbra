@@ -5,14 +5,42 @@ def search_middle_sign(num):
     return sign
 
 def real_complx_sepration(num):
-    # pattern = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i' # Previous pattern. Do not work for only real numbers
-    pattern = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i?' # Current best pattern
-    real_prt = re.search(pattern, num).groups()[0]
-    complx_part = re.search(pattern, num).groups()[1]
-    if complx_part == '-' or complx_part == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
-        complx_part = complx_part + '1'
+    '''
+        Function to separate the real and imaginary part out of a complex number.
+        Accepted formats
+        - "i", "-i", "+i" --> where i is sqrt(-1)
+        - "mi" --> where "m" can be an real number and i is sqrt(-1)
+        - "n" --> where "m" can be a real number
+        - "n+mi" --> where "n" and "m" can be real numbers and i is sqrt(-1)
+        :param num:
+        :return:
+    '''
+    pattern1 = r'^(?:\+|-)?\d*\.?\d*i'
 
-    return real_prt, complx_part
+    # pattern2 = r'(?:(?:\+|-)?\d*\.?\d*)$' # Old pattern
+    pattern2 = r'(?:\+|-)?\d*\.?\d*[^i]$' # Best pattern so far
+    if re.search(pattern1, num) != None: # For the format "mi", where m is a real number
+        if num[0] != '-' and num[0] != '+':
+            complx_prt = '+' + num[:-1] # Up to -1 to avoid the "i"
+        else:
+            complx_prt = num[:-1]
+
+        real_prt = '0'
+    elif re.search(pattern2, num) != None: # For the format "m", where m is a real number
+        if num[0] != '-' and num[0] != '+':
+            real_prt = '+' + num
+        else:
+            real_prt = num
+        complx_prt = '0'
+    else:
+        # pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i' # Previous pattern3. Do not work for only real numbers
+        pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i?' # Current best pattern
+        real_prt = re.search(pattern3, num).groups()[0]
+        complx_prt = re.search(pattern3, num).groups()[1]
+    if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
+        complx_prt = complx_prt + '1'
+
+    return real_prt, complx_prt
 
 def decimal_2_frac(num):
     ''' Function to transform from decimal to fraction'''
@@ -84,12 +112,12 @@ def real_complx_div(num_1, num_2):
 if __name__ == '__main__':
     num_1 = '4+8i'
     num_2 = '5+10i'
-    num_1 = '-i'
+    num_1 = '-0.001+1i'
     num_2 = '5+10i'
-    real_prt1, complx_part1 = real_complx_sepration(num_1)
+    real_prt1, complx_prt1 = real_complx_sepration(num_1)
     print('The real part is: ', real_prt1)
-    print('The complex part is: ', complx_part1)
-    print('The middle sign is: ', search_middle_sign(num_1))
+    print('The complex part is: ', complx_prt1)
+    # print('The middle sign is: ', search_middle_sign(num_1))
     # result = real_complx_sum(num_1, num_2)
     # print('The result of the sum is: ', result)
     # result = real_complx_subs(num_1, num_2)
