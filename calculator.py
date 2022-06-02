@@ -40,6 +40,10 @@ def real_complx_sepration(num):
     if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
         complx_prt = complx_prt + '1'
 
+    # The next pattern could be use for matching input numbers like "-0", "+0", "-000.0000", and then add more lines of
+        # code to formatting every similar input to a simple "0", but as the output numbers here are intended to be
+        # entered in float() function within other functions that call the present one, this is simply not necessary
+    # pattern4 = r'^(?:(?:\+|-)?0*\.?0*)'
     return real_prt, complx_prt
 
 def decimal_2_frac(num):
@@ -112,7 +116,7 @@ def real_complx_div(num_1, num_2):
 if __name__ == '__main__':
     num_1 = '4+8i'
     num_2 = '5+10i'
-    num_1 = '-0.001+1i'
+    num_1 = '-0.001'
     num_2 = '5+10i'
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
     print('The real part is: ', real_prt1)
