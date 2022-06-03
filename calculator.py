@@ -120,23 +120,46 @@ def real_complx_mult(num_1, num_2):
     return multply_signs(real_prt, complx_prt)
 
 def real_complx_div(num_1, num_2):
+    real_prt1, complx_prt1 = real_complx_sepration(num_1)
     real_prt2, complx_prt2 = real_complx_sepration(num_2)
-    complx_prt_conjug = format_floatnum(float(complx_prt2) * -1) # For the complex conjugate of num_2 (complx_conj_2)
+    real_prt1 = str(format_floatnum(float(real_prt1)))
+    complx_prt1 = str(format_floatnum(float(complx_prt1)))
+    real_prt2 = str(format_floatnum(float(real_prt2)))
+    complx_prt2 = str(format_floatnum(float(complx_prt2)))
+
+    if real_prt1 == '0' and complx_prt1 == '0':
+        return '0'
+    if real_prt2 == '0' and complx_prt2 == '0':
+        raise Exception('No number can be divided by zero')
+
+    complx_prt_conjug = str(format_floatnum(float(complx_prt2) * -1)) # For the complex conjugate of num_2 (complx_conj_2)
     complx_conj_2 = multply_signs(real_prt2, complx_prt_conjug)
     # The formula of the complex division is (num1/num2) * (complx_conj_2/complx_conj_2)
-
     uppr_term = real_complx_mult(num_1, complx_conj_2)
     lowr_term = real_complx_mult(num_2, complx_conj_2) # This result is always a non-complex number
 
     uppr_term_real_prt,  uppr_term_cmplx_prt = real_complx_sepration(uppr_term)
+    # Giving format to numbers
+    uppr_term_real_prt, uppr_term_cmplx_prt = str(format_floatnum(float(uppr_term_real_prt))), \
+                                              str(format_floatnum(float(uppr_term_cmplx_prt)))
+    if lowr_term == '0':
+        return '0'
+    elif uppr_term_real_prt == '0':
+        real_prt = '0'
+        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
+    elif uppr_term_cmplx_prt == '0':
+        real_prt = uppr_term_real_prt + '/' + lowr_term
+        complx_prt = '0'
+    else:
+        # No zeroes anywhere
+        real_prt = uppr_term_real_prt + '/' + lowr_term
+        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
 
-    real_prt = uppr_term_real_prt + '/' + lowr_term
-    complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
     return multply_signs(real_prt, complx_prt)
 
 if __name__ == '__main__':
+    num_2 = '4-8i'
     num_1 = '4+8i'
-    num_2 = '5+10i'
     # num_2 = '4-8i'
     # real_prt1, complx_prt1 = real_complx_sepration(num_1)
     # print('The real part is: ', real_prt1)
