@@ -40,6 +40,8 @@ def real_complx_sepration(num):
     if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
         complx_prt = complx_prt + '1'
 
+    real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
+
     # The next pattern could be use for matching input numbers like "-0", "+0", "-000.0000", and then add more lines of
         # code to formatting every similar input to a simple "0", but as the output numbers here are intended to be
         # entered in float() function within other functions that call the present one, this is simply not necessary
@@ -122,10 +124,6 @@ def real_complx_mult(num_1, num_2):
 def real_complx_div(num_1, num_2):
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
     real_prt2, complx_prt2 = real_complx_sepration(num_2)
-    real_prt1 = str(format_floatnum(float(real_prt1)))
-    complx_prt1 = str(format_floatnum(float(complx_prt1)))
-    real_prt2 = str(format_floatnum(float(real_prt2)))
-    complx_prt2 = str(format_floatnum(float(complx_prt2)))
 
     if real_prt1 == '0' and complx_prt1 == '0':
         return '0'
@@ -139,9 +137,7 @@ def real_complx_div(num_1, num_2):
     lowr_term = real_complx_mult(num_2, complx_conj_2) # This result is always a non-complex number
 
     uppr_term_real_prt,  uppr_term_cmplx_prt = real_complx_sepration(uppr_term)
-    # Giving format to numbers
-    uppr_term_real_prt, uppr_term_cmplx_prt = str(format_floatnum(float(uppr_term_real_prt))), \
-                                              str(format_floatnum(float(uppr_term_cmplx_prt)))
+
     if lowr_term == '0':
         return '0'
     elif uppr_term_real_prt == '0':
@@ -153,14 +149,14 @@ def real_complx_div(num_1, num_2):
     else:
         # No zeroes anywhere
         real_prt = uppr_term_real_prt + '/' + lowr_term
-        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
+        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')i'
 
     return multply_signs(real_prt, complx_prt)
 
 if __name__ == '__main__':
-    num_2 = '4-8i'
-    num_1 = '4+8i'
-    # num_2 = '4-8i'
+    num_1 = '4-8i'
+    num_2 = '4+8i'
+    # num_1 = '-0-0i'
     # real_prt1, complx_prt1 = real_complx_sepration(num_1)
     # print('The real part is: ', real_prt1)
     # print('The complex part is: ', complx_prt1)
