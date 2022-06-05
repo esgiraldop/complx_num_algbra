@@ -66,6 +66,11 @@ def format_floatnum(num):
 
 def format_complx_ouput(num):
 
+    if '(' in num and ')' in num:
+        # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
+            # formatted already from function join_uppr_lwr_terms()
+        return num
+
     real_prt, complx_prt = real_complx_sepration(num)
     real_is_zero = any([real_prt == '0', real_prt == '-0', real_prt == '+0'])
     cmplx_is_zero = any([complx_prt == '0', complx_prt == '-0', complx_prt == '+0'])
@@ -86,6 +91,19 @@ def join_real_complx_prts(real_prt, complx_prt):
 
     complx_num = str(real_prt) + str(complx_prt) + 'i'
     return format_complx_ouput(complx_num)
+
+def trim_sign(num):
+
+    num = re.sub(r'\+|-', '', num)
+    return num
+
+def join_uppr_lwr_terms(uppr_prt, lwr_prt):
+
+    sign = str(float(uppr_prt)*float(lwr_prt))[0]
+    if sign != '-':
+        sign = ''
+
+    return sign + '('+ trim_sign(uppr_prt) + '/' + trim_sign(lwr_prt) + ')'
 
 def real_complx_sum(num_1, num_2):
     # NOTE TO MYSELF: What if there are decimals?
@@ -138,14 +156,14 @@ def real_complx_div(num_1, num_2):
         return '0'
     elif uppr_term_real_prt == '0':
         real_prt = '0'
-        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')'
+        complx_prt = join_uppr_lwr_terms(uppr_term_cmplx_prt, lowr_term)
     elif uppr_term_cmplx_prt == '0':
-        real_prt = uppr_term_real_prt + '/' + lowr_term
+        real_prt = join_uppr_lwr_terms(uppr_term_real_prt, lowr_term)
         complx_prt = '0'
     else:
         # No zeroes anywhere
-        real_prt = uppr_term_real_prt + '/' + lowr_term
-        complx_prt = '(' + uppr_term_cmplx_prt + '/' + lowr_term + ')i'
+        real_prt = join_uppr_lwr_terms(uppr_term_real_prt, lowr_term)
+        complx_prt = join_uppr_lwr_terms(uppr_term_cmplx_prt, lowr_term)
 
     return join_real_complx_prts(real_prt, complx_prt)
 
