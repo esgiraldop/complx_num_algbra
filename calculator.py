@@ -154,19 +154,22 @@ def real_complx_div(num_1, num_2):
     return multply_signs(real_prt, complx_prt)
 
 if __name__ == '__main__':
-    num_2 = '4-8i'
-    num_1 = '4+8i'
-    num_2 = '5+10i'
-    # num_1 = '-0-0i'
-    # real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    # print('The real part is: ', real_prt1)
-    # print('The complex part is: ', complx_prt1)
-    # print('The middle sign is: ', search_middle_sign(num_1))
-    # result = real_complx_sum(num_1, num_2)
-    # print('The result of the sum is: ', result)
-    # result = real_complx_subs(num_1, num_2)
-    # print('The result of the subtraction is: ', result)
-    # result = real_complx_mult(num_1, num_2)
-    # print('The result of the multiplication is: ', result)
-    result = real_complx_div(num_1, num_2)
-    print('The result of the division is: ', result)
+    # num_2 = '4-8i'
+    # num_1 = '4+8i'
+    # num_2 = '5+10i'
+    # # num_1 = '-0-0i'
+    # # real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    # # print('The real part is: ', real_prt1)
+    # # print('The complex part is: ', complx_prt1)
+    # # print('The middle sign is: ', search_middle_sign(num_1))
+    # # result = real_complx_sum(num_1, num_2)
+    # # print('The result of the sum is: ', result)
+    # # result = real_complx_subs(num_1, num_2)
+    # # print('The result of the subtraction is: ', result)
+    # # result = real_complx_mult(num_1, num_2)
+    # # print('The result of the multiplication is: ', result)
+    # result = real_complx_div(num_1, num_2)
+    # print('The result of the division is: ', result)
+    import sys
+    import pytest
+    sys.exit(pytest.main(['test_files.test_real_complx_mult.py']))
