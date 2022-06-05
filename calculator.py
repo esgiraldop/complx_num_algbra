@@ -70,12 +70,8 @@ def format_complx_ouput(num):
     real_is_zero = any([real_prt == '0', real_prt == '-0', real_prt == '+0'])
     cmplx_is_zero = any([complx_prt == '0', complx_prt == '-0', complx_prt == '+0'])
     if real_is_zero:
-        if complx_prt[0] == '+':
-            return complx_prt[1:]
-        return complx_prt
+        return complx_prt + 'i'
     elif cmplx_is_zero:
-        if real_prt[0] == '+':
-            return real_prt[1:]
         return real_prt
     elif real_is_zero and cmplx_is_zero:
         return '0'
@@ -154,22 +150,18 @@ def real_complx_div(num_1, num_2):
     return multply_signs(real_prt, complx_prt)
 
 if __name__ == '__main__':
-    # num_2 = '4-8i'
-    # num_1 = '4+8i'
-    # num_2 = '5+10i'
-    # # num_1 = '-0-0i'
-    # # real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    # # print('The real part is: ', real_prt1)
-    # # print('The complex part is: ', complx_prt1)
-    # # print('The middle sign is: ', search_middle_sign(num_1))
-    # # result = real_complx_sum(num_1, num_2)
-    # # print('The result of the sum is: ', result)
-    # # result = real_complx_subs(num_1, num_2)
-    # # print('The result of the subtraction is: ', result)
-    # # result = real_complx_mult(num_1, num_2)
-    # # print('The result of the multiplication is: ', result)
+    num_2 = '4-8i'
+    num_1 = '4+8i'
+    # num_1 = '-0-0i'
+    # real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    # print('The real part is: ', real_prt1)
+    # print('The complex part is: ', complx_prt1)
+    # print('The middle sign is: ', search_middle_sign(num_1))
+    # result = real_complx_sum(num_1, num_2)
+    # print('The result of the sum is: ', result)
+    result = real_complx_subs(num_1, num_2)
+    print('The result of the subtraction is: ', result)
+    # result = real_complx_mult(num_1, num_2)
+    # print('The result of the multiplication is: ', result)
     # result = real_complx_div(num_1, num_2)
     # print('The result of the division is: ', result)
-    import sys
-    import pytest
-    sys.exit(pytest.main(['test_files.test_real_complx_mult.py']))

@@ -50,3 +50,18 @@ def test_real_complx_sepration_9():
     real_prt1, complx_prt1 = real_complx_sepration('-3.45+53213.676i')
     assert real_prt1 == '-3.45'
     assert complx_prt1 == '53213.676'
+
+def test_real_complx_sepration_10():
+    real_prt1, complx_prt1 = real_complx_sepration('0+16i')
+    assert real_prt1 == '0'
+    assert complx_prt1 == '16'
+
+def test_real_complx_sepration_11():
+    real_prt1, complx_prt1 = real_complx_sepration('-0-8i')
+    assert real_prt1 == '0'
+    assert complx_prt1 == '-8'
+
+def test_real_complx_sepration_12():
+    real_prt1, complx_prt1 = real_complx_sepration('-8-0i')
+    assert real_prt1 == '-8'
+    assert complx_prt1 == '0'

@@ -37,3 +37,11 @@ def test_real_complx_subs_7():
 def test_real_complx_subs_8():
     result = real_complx_subs('0', '4-8i')
     assert result == '-4+8i'
+
+def test_real_complx_subs_9():
+    result = real_complx_subs('4-8i', '4+8i')
+    assert result == '-16i'
+
+def test_real_complx_subs_10():
+    result = real_complx_subs('4+8i', '4-8i')
+    assert result == '16i'
