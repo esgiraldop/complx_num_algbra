@@ -33,10 +33,17 @@ def real_complx_sepration(num):
             real_prt = num
         complx_prt = '0'
     else:
-        # pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i' # Previous pattern3. Do not work for only real numbers
-        pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i?' # Current best pattern
-        real_prt = re.search(pattern3, num).groups()[0]
-        complx_prt = re.search(pattern3, num).groups()[1]
+        # pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i' # First pattern3. Do not work for only real numbers
+        # pattern3 = r'((?:\+|-)?\d*\.?\d*)((?:\+|-)?\d*\.?\d*)i?' # Second pattern3. Do not work for fractionals
+        # real_prt = re.search(pattern3, num).groups()[0]
+        # complx_prt = re.search(pattern3, num).groups()[1]
+
+        # I found a better way to make the pattern shorter
+        # pattern3 =r'((?:\+|-)?\d+\.?\d*?)i?' # Third pattern3. Shorter version of the previous one
+        pattern3 = r'((?:\+|-)?\(?\d+\.?\d*?\/?(?:\d+\.?\d*?)?\)?)i?' # Current best one. Also supports fractional numbers
+        found_prts = re.findall(pattern3, num)
+        real_prt = found_prts[0]
+        complx_prt = found_prts[1]
     if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
         complx_prt = complx_prt + '1'
 
@@ -66,10 +73,10 @@ def format_floatnum(num):
 
 def format_complx_ouput(num):
 
-    if '(' in num and ')' in num:
-        # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
-            # formatted already from function join_uppr_lwr_terms()
-        return num
+    # if '(' in num and ')' in num:
+    #     # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
+    #         # formatted already from function join_uppr_lwr_terms()
+    #     return num
 
     real_prt, complx_prt = real_complx_sepration(num)
     real_is_zero = any([real_prt == '0', real_prt == '-0', real_prt == '+0'])
