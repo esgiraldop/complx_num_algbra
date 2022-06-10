@@ -47,7 +47,12 @@ def real_complx_sepration(num):
     if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
         complx_prt = complx_prt + '1'
 
-    real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
+    if ('(' in real_prt and ')' in real_prt) or ('(' in complx_prt and ')' in complx_prt):
+        # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
+            # formatted already from function join_uppr_lwr_terms()
+        return real_prt, complx_prt
+    else:
+        real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
 
     # The next pattern could be use for matching input numbers like "-0", "+0", "-000.0000", and then add more lines of
         # code to formatting every similar input to a simple "0", but as the output numbers here are intended to be
