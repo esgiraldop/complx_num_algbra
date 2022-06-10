@@ -117,6 +117,26 @@ def join_uppr_lwr_terms(uppr_prt, lwr_prt):
 
     return sign + '('+ trim_sign(uppr_prt) + '/' + trim_sign(lwr_prt) + ')'
 
+def calc_primes():
+    prime = 2
+    while True:
+        for div in range(2, prime):
+            if prime % div == 0:
+                prime += 1
+                break
+        else:
+            yield prime
+
+def smplfy_frctions(uppr_part, lwr_part):
+    for prime_num in calc_primes(): # How to give the top prime number?
+        if uppr_part%prime_num == 0 and lwr_part%prime_num == 0:
+            uppr_part /= prime_num
+            lwr_part /= prime_num
+        else:
+            continue # With the next prime number
+            # If the prime number grows up to any uppr_part or lwr_part (Whichever it reaches first), then the fraction
+                # is not simplifiable)
+
 def real_complx_sum(num_1, num_2):
     # NOTE TO MYSELF: What if there are decimals?
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
@@ -154,7 +174,7 @@ def real_complx_div(num_1, num_2):
     if real_prt1 == '0' and complx_prt1 == '0':
         return '0'
     if real_prt2 == '0' and complx_prt2 == '0':
-        raise Exception('No number can be divided by zero')
+        raise Exception('No number is divisible by zero')
 
     complx_prt_conjug = str(format_floatnum(float(complx_prt2) * -1)) # For the complex conjugate of num_2 (complx_conj_2)
     complx_conj_2 = join_real_complx_prts(real_prt2, complx_prt_conjug)
@@ -180,7 +200,7 @@ def real_complx_div(num_1, num_2):
     return join_real_complx_prts(real_prt, complx_prt)
 
 if __name__ == '__main__':
-    num_2 = '4-8i'
+    num_2 = '0'
     num_1 = '4+8i'
     # num_1 = '-0-0i'
     # real_prt1, complx_prt1 = real_complx_sepration(num_1)

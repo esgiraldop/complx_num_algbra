@@ -21,3 +21,7 @@ def test_real_complx_div_3():
 def test_real_complx_div_4():
     result = real_complx_div('4-8i', '4+8i')
     assert result == '-(48/80)-(64/80)i'
+
+def test_real_complx_div_5():
+    result = real_complx_div('0', '4+8i')
+    assert result == '0'
