@@ -50,14 +50,12 @@ def real_complx_sepration(num):
     if ('(' in real_prt and ')' in real_prt) or ('(' in complx_prt and ')' in complx_prt):
         # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
             # formatted already from function join_uppr_lwr_terms()
+        real_prt = format_fracnum(real_prt)
+        complx_prt = format_fracnum(complx_prt)
         return real_prt, complx_prt
     else:
         real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
 
-    # The next pattern could be use for matching input numbers like "-0", "+0", "-000.0000", and then add more lines of
-        # code to formatting every similar input to a simple "0", but as the output numbers here are intended to be
-        # entered in float() function within other functions that call the present one, this is simply not necessary
-    # pattern4 = r'^(?:(?:\+|-)?0*\.?0*)'
     return real_prt, complx_prt
 
 def decimal_2_frac(num):
@@ -75,6 +73,18 @@ def format_floatnum(num):
         return int(num)
 
     return num
+
+def format_fracnum(num):
+    '''
+        Function for formatting fractional numbers. If there is a number like "+(5/7)", it is formatted to "(5/7)"
+        :param num:
+        :return:
+    '''
+
+    if num.startswith('+'):
+        return num[1:]
+    else:
+        return num
 
 def format_complx_ouput(num):
 
@@ -117,9 +127,8 @@ def join_uppr_lwr_terms(uppr_prt, lwr_prt):
 
     return sign + '('+ trim_sign(uppr_prt) + '/' + trim_sign(lwr_prt) + ')'
 
-def calc_primes():
-    prime = 2
-    while True:
+def calc_primes(lim_num):
+    for prime in range(2, lim_num):
         for div in range(2, prime):
             if prime % div == 0:
                 prime += 1
@@ -128,14 +137,25 @@ def calc_primes():
             yield prime
 
 def smplfy_frctions(uppr_part, lwr_part):
-    for prime_num in calc_primes(): # How to give the top prime number?
-        if uppr_part%prime_num == 0 and lwr_part%prime_num == 0:
-            uppr_part /= prime_num
-            lwr_part /= prime_num
+    smallr_num = 3
+    while smallr_num > 2:
+        if uppr_part > lwr_part:
+            smallr_num = lwr_part
         else:
-            continue # With the next prime number
-            # If the prime number grows up to any uppr_part or lwr_part (Whichever it reaches first), then the fraction
-                # is not simplifiable)
+            smallr_num = uppr_part
+
+        for prime_num in calc_primes(smallr_num): # How to give the top prime number?
+            if uppr_part%prime_num == 0 and lwr_part%prime_num == 0:
+                uppr_part /= prime_num
+                lwr_part /= prime_num
+            else:
+                continue # With the next prime number
+        else:
+            return uppr_part, lwr_part
+
+    return uppr_part, lwr_part
+                # If the prime number grows up to any uppr_part or lwr_part (Whichever it reaches first), then the fraction
+                    # is not simplifiable)
 
 def real_complx_sum(num_1, num_2):
     # NOTE TO MYSELF: What if there are decimals?
@@ -202,10 +222,10 @@ def real_complx_div(num_1, num_2):
 if __name__ == '__main__':
     num_2 = '0'
     num_1 = '4+8i'
-    # num_1 = '-0-0i'
-    # real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    # print('The real part is: ', real_prt1)
-    # print('The complex part is: ', complx_prt1)
+    num_1 = '+(8/12)+(9/4)i'
+    real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    print('The real part is: ', real_prt1)
+    print('The complex part is: ', complx_prt1)
     # print('The middle sign is: ', search_middle_sign(num_1))
     # result = real_complx_sum(num_1, num_2)
     # print('The result of the sum is: ', result)
@@ -213,5 +233,5 @@ if __name__ == '__main__':
     # print('The result of the subtraction is: ', result)
     # result = real_complx_mult(num_1, num_2)
     # print('The result of the multiplication is: ', result)
-    result = real_complx_div(num_1, num_2)
-    print('The result of the division is: ', result)
+    # result = real_complx_div(num_1, num_2)
+    # print('The result of the division is: ', result)

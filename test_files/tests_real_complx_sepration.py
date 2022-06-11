@@ -65,3 +65,23 @@ def test_real_complx_sepration_12():
     real_prt1, complx_prt1 = real_complx_sepration('-8-0i')
     assert real_prt1 == '-8'
     assert complx_prt1 == '0'
+
+def test_real_complx_sepration_13():
+    real_prt1, complx_prt1 = real_complx_sepration('-(8/12)-(9/4)i')
+    assert real_prt1 == '-(8/12)'
+    assert complx_prt1 == '-(9/4)'
+
+def test_real_complx_sepration_14():
+    real_prt1, complx_prt1 = real_complx_sepration('+(8/12)+(9/4)i')
+    assert real_prt1 == '(8/12)'
+    assert complx_prt1 == '(9/4)'
+
+def test_real_complx_sepration_15():
+    real_prt1, complx_prt1 = real_complx_sepration('+(8/12)+0i')
+    assert real_prt1 == '(8/12)'
+    assert complx_prt1 == '0'
+
+def test_real_complx_sepration_16():
+    real_prt1, complx_prt1 = real_complx_sepration('+0+(9/4)i')
+    assert real_prt1 == '0'
+    assert complx_prt1 == '(9/4)'
