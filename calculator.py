@@ -144,12 +144,10 @@ def smplfy_frctions(uppr_part, lwr_part):
         else:
             smallr_num = uppr_part
 
-        for prime_num in calc_primes(smallr_num): # How to give the top prime number?
-            if uppr_part%prime_num == 0 and lwr_part%prime_num == 0:
+        for prime_num in calc_primes(smallr_num):
+            while uppr_part%prime_num == 0 and lwr_part%prime_num == 0:
                 uppr_part /= prime_num
                 lwr_part /= prime_num
-            else:
-                continue # With the next prime number
         else:
             return uppr_part, lwr_part
 
