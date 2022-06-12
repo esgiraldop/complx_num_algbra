@@ -2,7 +2,6 @@
     - Check nothing other than digits are entered by the user
     - Check input is of the form "n + mi", where "n" is the real part and "m" the complex part
     - The user should be able to enter fractions or decimals and get the answer in both formats
-    - Format the input so there are not whitespaces between terms and/or numbers
     - Check there are only two signs: One for the real part and one for the complex part
     - Numbers with decimals and fractions combined are not avoided. For example: (3.345/3.545)
     - Check the user does not input special characters that are not "(", ")", "/", "+", "-", ".", "i" or numbers
@@ -10,8 +9,7 @@
         -(45/56)
     - Check the user always enter fractions inside parentheses.
     - If user entered the two terms, check the second term has an "i" at the end. If it does not, add the 'i' to the
-        second term
-    - The user cannot enter such a thing as "-(5/3)++(67/6)i" '''
+        second term'''
 
 import re
 import calculator as calc
@@ -27,12 +25,22 @@ def exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_
 
 def is_input_wrong(num):
     '''
-        Function created for easy testing with unit testing
+        Function to check the input given by the user is in the correct format
+        The program checks in order if:
+            1. There are not whitespaces
+            2. Only numbers or these special characters are entered: "(", ")", "/", "+", "-", ".", "i"
+            3. The special characters are entered a maximum number of times
+            4. '+' and '-' are not entered more than two times
+            5. '+' and/or '-' are not entered one next to the other
+            6. There is a closing ')' parenthesis for every opening parenthesis '('
+            7. The complex number is separable in a real and a complex part
+            8. After obtaining the real and complex part, no "i" is found in neither of the two
+        This function was created for easy testing with unit testing
     :param num:
-    :return:
+    :return: Boolean. True if there is an error in the input, False otherwise.
     '''
     allowd_spcial_chars = r'\(|\)|\/|\.|\+|\-|i|\d'
-    not_allowd_spcial_chars = r'[^\(|\)|\/|\.|\+|\-|i|\d]'
+    not_allowd_spcial_chars = r'[^()i\/.+\-0-9]'
     allowd_spcial_chars_list = [r"\(", r"\)", r"\/", r"\.", r"\+", r"\-", r"i"]
     allowd_spcial_chars_num = [2, 2, 2, 2, 2, 2, 1]
 
@@ -52,9 +60,25 @@ def is_input_wrong(num):
         print('Incorrect format. Please try again')
         return True
 
+    if len(re.findall(r'(?:\+|\-){2,}', num)) > 0: # For patterns like 1--5i or ++1-5i
+        print('Incorrect format. Please try again')
+        return True
+
     num_open_paren = len(re.findall(r'\(', num))
     num_close_paren = len(re.findall(r'\)', num))
     if num_open_paren != num_close_paren:
+        print('Incorrect format. Please try again')
+        return True
+
+    try:
+        real_prt, complx_prt = calc.real_complx_sepration(num)
+    except:
+        print('Incorrect format. Please try again')
+        return True
+
+    if 'i' in real_prt or 'i' in complx_prt:
+        # If the input is correct, real_complx_sepration() should output two numbers without the "i". See script
+            # "tests_real_complx_sepration.py"
         print('Incorrect format. Please try again')
         return True
 
