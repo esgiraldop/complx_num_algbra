@@ -46,6 +46,17 @@ def ask_num():
         # Checking the maximum number of special characters
         if exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num): continue
 
+        if len(re.findall('\+|\-', num)) > 2:
+            print('Incorrect format. Please try again')
+            continue
+
+        num_open_paren = len(re.findall('\(', num))
+        num_close_paren = len(re.findall('\)', num))
+        if num_open_paren != num_close_paren:
+            print('Incorrect format. Please try again')
+            continue
+
+
         return num
 
 

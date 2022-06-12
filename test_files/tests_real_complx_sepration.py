@@ -1,8 +1,8 @@
 import sys
 import os
 sys.path.append(os.getcwd())
-
-from complx_num_algbra.calculator import *
+from calculator import *
+import pytest
 
 '''Run this file from the parent directory with "pytest test_files\tests_real_complx_sepration.py" '''
 
@@ -85,3 +85,12 @@ def test_real_complx_sepration_16():
     real_prt1, complx_prt1 = real_complx_sepration('+0+(9/4)i')
     assert real_prt1 == '0'
     assert complx_prt1 == '(9/4)'
+
+def test_real_complx_sepration_17():
+    real_prt1, complx_prt1 = real_complx_sepration('5+i')
+    assert real_prt1 == '5'
+    assert complx_prt1 == '1'
+
+if __name__ == '__main__':
+    os.chdir('..') # For being able to debug while testing
+    sys.exit(pytest.main(['-k', 'tests_real_complx_sepration.py'], plugins=[test_real_complx_sepration_13()]))

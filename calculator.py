@@ -43,15 +43,25 @@ def real_complx_sepration(num):
         pattern3 = r'((?:\+|-)?\(?\d+\.?\d*?\/?(?:\d+\.?\d*?)?\)?)i?' # Current best one. Also supports fractional numbers
         found_prts = re.findall(pattern3, num)
         real_prt = found_prts[0]
-        complx_prt = found_prts[1]
+        if len(found_prts) > 1:
+            complx_prt = found_prts[1]
+        elif len(found_prts) == 1:
+            if 'i' in num:
+                # The code was not working for '4+i' for example and fixing the regex is too complicated
+                complx_prt = search_middle_sign(num)
+
     if complx_prt == '-' or complx_prt == '+': # In case the user enters for example 1+i or 1-i or 34.56+i
         complx_prt = complx_prt + '1'
 
     if ('(' in real_prt and ')' in real_prt) or ('(' in complx_prt and ')' in complx_prt):
         # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
             # formatted already from function join_uppr_lwr_terms()
-        real_prt = trim_sign(real_prt)
-        complx_prt = trim_sign(complx_prt)
+        if real_prt[0] == '+':
+            real_prt = real_prt[1:]
+
+        if complx_prt[0] == '+':
+            complx_prt = complx_prt[1:]
+
         return real_prt, complx_prt
     else:
         real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
