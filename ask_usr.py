@@ -14,6 +14,7 @@
     - The user cannot enter such a thing as "-(5/3)++(67/6)i" '''
 
 import re
+import calculator as calc
 
 def exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num):
     for char, max_coincdnses in zip(allowd_spcial_chars_list, allowd_spcial_chars_num):
@@ -24,40 +25,51 @@ def exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_
 
     return False
 
-def ask_num():
+def is_input_wrong(num):
+    '''
+        Function created for easy testing with unit testing
+    :param num:
+    :return:
+    '''
     allowd_spcial_chars = r'\(|\)|\/|\.|\+|\-|i|\d'
     not_allowd_spcial_chars = r'[^\(|\)|\/|\.|\+|\-|i\d]'
     allowd_spcial_chars_list = [r"\(", r"\)", r"\/", r"\.", r"\+", r"\-", r"i"]
     allowd_spcial_chars_num = [2, 2, 2, 2, 2, 2, 1]
+
+    if ' ' in num:
+        print("Whitespaces are not allowed.")
+        return True
+
+    if re.match(not_allowd_spcial_chars, num) != None:
+        print("Please recall the only accepted characters are '(', ')', '/', '+', '-', '.', 'i' ")
+        return True
+
+    # Checking the maximum number of special characters
+    if exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num):
+        return True
+
+    if len(re.findall('\+|\-', num)) > 2:
+        print('Incorrect format. Please try again')
+        return True
+
+    num_open_paren = len(re.findall('\(', num))
+    num_close_paren = len(re.findall('\)', num))
+    if num_open_paren != num_close_paren:
+        print('Incorrect format. Please try again')
+        return True
+
+    # If all the previous checks fail (Meaning no conditional succeeds), the input is ok and the outer while loop is
+        # ended
+    return False
+
+def ask_num():
     next_loop = True
 
     while next_loop:
-
         num = input('Please enter a number: ')
+        next_loop = is_input_wrong(num)
 
-        if ' ' in num:
-            print("Please recall whitespaces are not allowed.")
-            continue
-
-        if re.match(not_allowd_spcial_chars, num) != None:
-            print("Please recall the only accepted characters are '(', ')', '/', '+', '-', '.', 'i' ")
-            continue
-
-        # Checking the maximum number of special characters
-        if exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num): continue
-
-        if len(re.findall('\+|\-', num)) > 2:
-            print('Incorrect format. Please try again')
-            continue
-
-        num_open_paren = len(re.findall('\(', num))
-        num_close_paren = len(re.findall('\)', num))
-        if num_open_paren != num_close_paren:
-            print('Incorrect format. Please try again')
-            continue
-
-
-        return num
+    return num
 
 
 if __name__ == '__main__':
