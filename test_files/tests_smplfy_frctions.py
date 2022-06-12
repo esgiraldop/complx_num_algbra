@@ -30,6 +30,12 @@ def test_smplfy_frctions_4():
     assert uppr_part == 1
     assert lwr_part == 2
 
+def test_smplfy_frctions_5():
+    uppr_part, lwr_part = 100, 125
+    uppr_part, lwr_part = smplfy_frctions(uppr_part, lwr_part)
+    assert uppr_part == 4
+    assert lwr_part == 5
+
 if __name__ == '__main__':
     os.chdir('..') # For being able to debug while testing
     sys.exit(pytest.main(['-k', 'tests_smplfy_frctions.py'], plugins=[test_smplfy_frctions_1()]))

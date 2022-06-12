@@ -50,8 +50,8 @@ def real_complx_sepration(num):
     if ('(' in real_prt and ')' in real_prt) or ('(' in complx_prt and ')' in complx_prt):
         # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
             # formatted already from function join_uppr_lwr_terms()
-        real_prt = format_fracnum(real_prt)
-        complx_prt = format_fracnum(complx_prt)
+        real_prt = trim_sign(real_prt)
+        complx_prt = trim_sign(complx_prt)
         return real_prt, complx_prt
     else:
         real_prt, complx_prt = str(format_floatnum(float(real_prt))), str(format_floatnum(float(complx_prt)))
@@ -74,24 +74,7 @@ def format_floatnum(num):
 
     return num
 
-def format_fracnum(num):
-    '''
-        Function for formatting fractional numbers. If there is a number like "+(5/7)", it is formatted to "(5/7)"
-        :param num:
-        :return:
-    '''
-
-    if num.startswith('+'):
-        return num[1:]
-    else:
-        return num
-
 def format_complx_ouput(num):
-
-    # if '(' in num and ')' in num:
-    #     # Seems weird, but is an easy way to bypass what is coming for division, since coming complex numbers come
-    #         # formatted already from function join_uppr_lwr_terms()
-    #     return num
 
     real_prt, complx_prt = real_complx_sepration(num)
     real_is_zero = any([real_prt == '0', real_prt == '-0', real_prt == '+0'])
@@ -137,6 +120,19 @@ def calc_primes(lim_num):
             yield prime
 
 def smplfy_frctions(uppr_part, lwr_part):
+    sign_uppr_part = ''
+    sign_lwr_part = ''
+
+    if uppr_part.startswith('-'):
+        sign_uppr_part = '-'
+        uppr_part = uppr_part[1:] # The simplifying process does not work with negative numbers
+
+    if lwr_part.startswith('-'):
+        sign_lwr_part = '-'
+        lwr_part = lwr_part[1:] # The simplifying process does not work with negative numbers
+
+    uppr_part = int(uppr_part)
+    lwr_part = int(lwr_part)
     smallr_num = 3
     while smallr_num > 2:
         if uppr_part > lwr_part:
@@ -149,11 +145,16 @@ def smplfy_frctions(uppr_part, lwr_part):
                 uppr_part /= prime_num
                 lwr_part /= prime_num
         else:
+            # If the prime number grows up to any smallr_num, then the fraction is not simplifiable
+            # Appending the signs back
+            uppr_part = sign_uppr_part + str(int(uppr_part))
+            lwr_part = sign_lwr_part + str(int(lwr_part))
             return uppr_part, lwr_part
 
+    # Appending the signs back
+    uppr_part = sign_uppr_part + str(int(uppr_part))
+    lwr_part = sign_lwr_part + str(int(lwr_part))
     return uppr_part, lwr_part
-                # If the prime number grows up to any uppr_part or lwr_part (Whichever it reaches first), then the fraction
-                    # is not simplifiable)
 
 def real_complx_sum(num_1, num_2):
     # NOTE TO MYSELF: What if there are decimals?
@@ -206,14 +207,18 @@ def real_complx_div(num_1, num_2):
         return '0'
     elif uppr_term_real_prt == '0':
         real_prt = '0'
+        uppr_term_cmplx_prt, lowr_term = smplfy_frctions(uppr_term_cmplx_prt, lowr_term)
         complx_prt = join_uppr_lwr_terms(uppr_term_cmplx_prt, lowr_term)
     elif uppr_term_cmplx_prt == '0':
+        uppr_term_real_prt, lowr_term = smplfy_frctions(uppr_term_real_prt, lowr_term)
         real_prt = join_uppr_lwr_terms(uppr_term_real_prt, lowr_term)
         complx_prt = '0'
     else:
         # No zeroes anywhere
-        real_prt = join_uppr_lwr_terms(uppr_term_real_prt, lowr_term)
-        complx_prt = join_uppr_lwr_terms(uppr_term_cmplx_prt, lowr_term)
+        uppr_term_real_prt, lowr_term_symplfied = smplfy_frctions(uppr_term_real_prt, lowr_term)
+        uppr_term_cmplx_prt, _ = smplfy_frctions(uppr_term_cmplx_prt, lowr_term)
+        real_prt = join_uppr_lwr_terms(uppr_term_real_prt, lowr_term_symplfied)
+        complx_prt = join_uppr_lwr_terms(uppr_term_cmplx_prt, lowr_term_symplfied)
 
     return join_real_complx_prts(real_prt, complx_prt)
 
