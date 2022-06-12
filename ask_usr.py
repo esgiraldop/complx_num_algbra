@@ -48,12 +48,12 @@ def is_input_wrong(num):
     if exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num):
         return True
 
-    if len(re.findall('\+|\-', num)) > 2:
+    if len(re.findall(r'\+|\-', num)) > 2:
         print('Incorrect format. Please try again')
         return True
 
-    num_open_paren = len(re.findall('\(', num))
-    num_close_paren = len(re.findall('\)', num))
+    num_open_paren = len(re.findall(r'\(', num))
+    num_close_paren = len(re.findall(r'\)', num))
     if num_open_paren != num_close_paren:
         print('Incorrect format. Please try again')
         return True
