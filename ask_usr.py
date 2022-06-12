@@ -5,3 +5,4 @@
     - Format the input so there are not whitespaces between terms and/or numbers
     - Check there are only two signs: One for the real part and one for the complex part
     - Numbers with decimals and fractions combined are not avoided. For example: (3.345/3.545)'''
+
