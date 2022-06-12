@@ -108,7 +108,13 @@ def join_uppr_lwr_terms(uppr_prt, lwr_prt):
     if sign != '-':
         sign = ''
 
-    return sign + '('+ trim_sign(uppr_prt) + '/' + trim_sign(lwr_prt) + ')'
+    if uppr_prt != lwr_prt:
+        frction = sign + '('+ trim_sign(uppr_prt) + '/' + trim_sign(lwr_prt) + ')'
+    else:
+        # (n/n) = n
+        frction = sign + trim_sign(uppr_prt)
+
+    return frction
 
 def calc_primes(lim_num):
     for prime in range(2, lim_num):

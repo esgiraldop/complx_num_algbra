@@ -26,6 +26,10 @@ def test_real_complx_div_5():
     result = real_complx_div('0', '4+8i')
     assert result == '0'
 
+def test_real_complx_div_6():
+    result = real_complx_div('4+8i', '4+8i')
+    assert result == '1'
+
 if __name__ == '__main__':
     os.chdir('..') # For being able to debug while testing
     sys.exit(pytest.main(['-k', 'tests_real_complx_div.py'], plugins=[test_real_complx_div_4()]))
