@@ -32,7 +32,7 @@ def is_input_wrong(num):
     :return:
     '''
     allowd_spcial_chars = r'\(|\)|\/|\.|\+|\-|i|\d'
-    not_allowd_spcial_chars = r'[^\(|\)|\/|\.|\+|\-|i\d]'
+    not_allowd_spcial_chars = r'[^\(|\)|\/|\.|\+|\-|i|\d]'
     allowd_spcial_chars_list = [r"\(", r"\)", r"\/", r"\.", r"\+", r"\-", r"i"]
     allowd_spcial_chars_num = [2, 2, 2, 2, 2, 2, 1]
 
@@ -40,7 +40,7 @@ def is_input_wrong(num):
         print("Whitespaces are not allowed.")
         return True
 
-    if re.match(not_allowd_spcial_chars, num) != None:
+    if len(re.findall(not_allowd_spcial_chars, num)) > 0:
         print("Please recall the only accepted characters are '(', ')', '/', '+', '-', '.', 'i' ")
         return True
 
