@@ -44,8 +44,8 @@ def is_input_wrong(num):
             7. After obtaining the real and complex part, no "i" is found in neither of the two
             8. The real part has maximum 1 especial character out of "(", ")", "/", "+", "-" or "."
             9. The complex part has only 1 especial character out of "(", ")", "/", "+", "-" or "."
-            10. Checks #5. for the real part
-            11. Checks #5. for the complex part
+            10. Checks #5 for the real part only
+            11. Checks #5 for the complex part only
         This function was created for easy testing with unit testing
     :param num:
     :return: Boolean. True if there is an error in the input, False otherwise.

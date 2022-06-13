@@ -110,6 +110,26 @@ def test_is_input_wrong_25():
     result = is_input_wrong('(5/6)-(5.6/8)i')
     assert result == True
 
+def test_is_input_wrong_26():
+    result = is_input_wrong('--(5/6)(5/8)i')
+    assert result == True
+
+def test_is_input_wrong_27():
+    result = is_input_wrong('++(5/6)(5/8)i')
+    assert result == True
+
+def test_is_input_wrong_28():
+    result = is_input_wrong('(5/6)(5/8)i')
+    assert result == True
+
+def test_is_input_wrong_29():
+    result = is_input_wrong('65i')
+    assert result == False
+
+def test_is_input_wrong_30():
+    result = is_input_wrong('0')
+    assert result == False
+
 ''' Other wrong formats that should not pass
     - (5/6)(5/8)i
     - --(5/6)(5/8)i
@@ -122,4 +142,4 @@ def test_is_input_wrong_25():
 
 if __name__ == '__main__':
     os.chdir('..') # For being able to debug while testing
-    sys.exit(pytest.main(['-k', 'tests_ask_usr.py'], plugins=[test_is_input_wrong_25()]))
+    sys.exit(pytest.main(['-k', 'tests_ask_usr.py'], plugins=[test_is_input_wrong_28()]))

@@ -1,7 +1,12 @@
 import re
 
 def search_middle_sign(num):
-    sign = re.search(r'\d*\.?\d*(\+|-)\d*\.?\d*i', num).groups()[0]
+    # pattern = r'\d*\.?\d*(\+|-)\d*\.?\d*i' # Old pattern
+
+    # Best pattern so far. Supports a much wider range of formats
+    pattern = r'(?:\+|-)?\(?\d*\.?\d*\/?(?:\d*\.?\d*)\)?(\+|-)(?:\+|-)?\(?\d*\.?\d*\/?(?:\d*\.?\d*)\)?i?'
+
+    sign = re.search(pattern, num).groups()[0]
     return sign
 
 def real_complx_sepration(num):
