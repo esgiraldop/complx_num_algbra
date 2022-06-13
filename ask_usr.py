@@ -23,6 +23,13 @@ def exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_
 
     return False
 
+def not_closed_parentheses(num):
+    num_open_paren = len(re.findall(r'\(', num))
+    num_close_paren = len(re.findall(r'\)', num))
+    if num_open_paren != num_close_paren:
+        print('Incorrect format. Please try again')
+        return True
+
 def is_input_wrong(num):
     '''
         Function to check the input given by the user is in the correct format
@@ -32,10 +39,13 @@ def is_input_wrong(num):
             3. The special characters are entered a maximum number of times
             4. '+' and/or '-' are not entered one next to the other
             5. There is a closing ')' parenthesis for every opening parenthesis '('
-            6. The complex number is separable in a real and a complex part
+            6. The complex number is separable in a real and a complex part. Function real_complx_sepration() also
+                helps checking if any of the numbers within a fractional is decimal, which is not allowed.
             7. After obtaining the real and complex part, no "i" is found in neither of the two
             8. The real part has maximum 1 especial character out of "(", ")", "/", "+", "-" or "."
             9. The complex part has only 1 especial character out of "(", ")", "/", "+", "-" or "."
+            10. Checks #5. for the real part
+            11. Checks #5. for the complex part
         This function was created for easy testing with unit testing
     :param num:
     :return: Boolean. True if there is an error in the input, False otherwise.
@@ -61,10 +71,7 @@ def is_input_wrong(num):
         print('Incorrect format. Please try again')
         return True
 
-    num_open_paren = len(re.findall(r'\(', num))
-    num_close_paren = len(re.findall(r'\)', num))
-    if num_open_paren != num_close_paren:
-        print('Incorrect format. Please try again')
+    if not_closed_parentheses(num):
         return True
 
     try:
@@ -84,6 +91,12 @@ def is_input_wrong(num):
         return True
 
     if exceeds_max_spcial_chars(complx_prt, allowd_spcial_chars_list, allowd_spcial_chars_num):
+        return True
+
+    if not_closed_parentheses(real_prt):
+        return True
+
+    if not_closed_parentheses(complx_prt):
         return True
 
     # If all the previous checks fail (Meaning no conditional succeeds), the input is ok and the outer while loop is
