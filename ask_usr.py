@@ -39,13 +39,16 @@ def is_input_wrong(num):
             3. The special characters are entered a maximum number of times
             4. '+' and/or '-' are not entered one next to the other
             5. There is a closing ')' parenthesis for every opening parenthesis '('
-            6. The complex number is separable in a real and a complex part. Function real_complx_sepration() also
+            6. A special character does not follow another special character.
+                The special characters are: "(", ")", "/" and "."
+                This helps checking for inputs like "(5/6)(5/8)i", "(5//6)(5/8)i", "3..4+i" or the like.
+            7. The complex number is separable in a real and a complex part. Function real_complx_sepration() also
                 helps checking if any of the numbers within a fractional is decimal, which is not allowed.
-            7. After obtaining the real and complex part, no "i" is found in neither of the two
-            8. The real part has maximum 1 especial character out of "(", ")", "/", "+", "-" or "."
-            9. The complex part has only 1 especial character out of "(", ")", "/", "+", "-" or "."
-            10. Checks #5 for the real part only
-            11. Checks #5 for the complex part only
+            8. After obtaining the real and complex part, no "i" is found in neither of the two
+            9. The real part has maximum 1 especial character out of "(", ")", "/", "+", "-" or "."
+            10. The complex part has only 1 especial character out of "(", ")", "/", "+", "-" or "."
+            11. Checks #5 for the real part only
+            12. Checks #5 for the complex part only
         This function was created for easy testing with unit testing
     :param num:
     :return: Boolean. True if there is an error in the input, False otherwise.
@@ -73,6 +76,14 @@ def is_input_wrong(num):
 
     if not_closed_parentheses(num):
         return True
+
+    chars = [r'\(', r'\)', r'\/', r'\.'] # Any of these characters cannot be next to the other
+    for char1 in chars:
+        for char2 in chars:
+            pair = char1 + char2
+            if re.findall(pair, num):
+                print('Incorrect format. Please try again')
+                return True
 
     try:
         real_prt, complx_prt = calc.real_complx_sepration(num)

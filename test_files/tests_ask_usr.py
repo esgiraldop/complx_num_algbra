@@ -130,13 +130,26 @@ def test_is_input_wrong_30():
     result = is_input_wrong('0')
     assert result == False
 
+def test_is_input_wrong_31():
+    result = is_input_wrong('3..4+i')
+    assert result == True
+
+def test_is_input_wrong_32():
+    result = is_input_wrong('(3//4)+i')
+    assert result == True
+
+def test_is_input_wrong_33():
+    result = is_input_wrong('3..4-(3//4)i')
+    assert result == True
+
 ''' Other wrong formats that should not pass
     - (5/6)(5/8)i
     - --(5/6)(5/8)i
     - ++(5/6)(5/8)i
     
     Formats that should pass
-    - 0+(5/8)i --> Allowed
+    - 0+(5/8)i
+    - (5/6)-(58)i
     
     '''
 
