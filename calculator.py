@@ -15,10 +15,12 @@ def real_complx_sepration(num):
         :param num:
         :return:
     '''
-    pattern1 = r'^(?:\+|-)?\d*\.?\d*i'
+    # pattern1 = r'^(?:\+|-)?\d*\.?\d*i' # First patter
+    pattern1 = r'^(?:\+|-)?\(?\d*\.?\d*\/?(?:\d*\.?\d*)\)?i' # Best pattern so far
 
-    # pattern2 = r'(?:(?:\+|-)?\d*\.?\d*)$' # Old pattern
-    pattern2 = r'(?:\+|-)?\d*\.?\d*[^i]$' # Best pattern so far
+    # pattern2 = r'(?:(?:\+|-)?\d*\.?\d*)$' # First patter
+    # pattern2 = r'(?:\+|-)?\d*\.?\d*[^i]$' # Second pattern
+    pattern2 = r'(?:\+|-)?\(?\d*\.?\d*\/?(?:\d*\.?\d*)\)?[^i]$' # Best pattern so far
     if re.search(pattern1, num) != None: # For the format "mi", where m is a real number
         if num[0] != '-' and num[0] != '+':
             complx_prt = '+' + num[:-1] # Up to -1 to avoid the "i"

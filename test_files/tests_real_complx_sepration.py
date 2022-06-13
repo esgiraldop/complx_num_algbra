@@ -91,6 +91,23 @@ def test_real_complx_sepration_17():
     assert real_prt1 == '5'
     assert complx_prt1 == '1'
 
+def test_real_complx_sepration_18():
+    try:
+        real_prt1, complx_prt1 = real_complx_sepration('5+6')
+        assert False
+    except ValueError:
+        assert True
+
+def test_real_complx_sepration_19():
+    real_prt1, complx_prt1 = real_complx_sepration('(5/4)+(6/7)')
+    assert real_prt1 == '(5/4)+(6/7)' # Not a correct separation. This input is blocked from ask_usr.is_input_wrong()
+    assert complx_prt1 == '0'
+
+def test_real_complx_sepration_20():
+    real_prt1, complx_prt1 = real_complx_sepration('-(5/6)i')
+    assert real_prt1 == '0' # Not a correct separation. This input is blocked from ask_usr.is_input_wrong()
+    assert complx_prt1 == '-(5/6)'
+
 if __name__ == '__main__':
     os.chdir('..') # For being able to debug while testing
-    sys.exit(pytest.main(['-k', 'tests_real_complx_sepration.py'], plugins=[test_real_complx_sepration_13()]))
+    sys.exit(pytest.main(['-k', 'tests_real_complx_sepration.py'], plugins=[test_real_complx_sepration_20()]))

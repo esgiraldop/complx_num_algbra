@@ -30,19 +30,20 @@ def is_input_wrong(num):
             1. There are not whitespaces
             2. Only numbers or these special characters are entered: "(", ")", "/", "+", "-", ".", "i"
             3. The special characters are entered a maximum number of times
-            4. '+' and '-' are not entered more than two times
-            5. '+' and/or '-' are not entered one next to the other
-            6. There is a closing ')' parenthesis for every opening parenthesis '('
-            7. The complex number is separable in a real and a complex part
-            8. After obtaining the real and complex part, no "i" is found in neither of the two
+            4. '+' and/or '-' are not entered one next to the other
+            5. There is a closing ')' parenthesis for every opening parenthesis '('
+            6. The complex number is separable in a real and a complex part
+            7. After obtaining the real and complex part, no "i" is found in neither of the two
+            8. The real part has maximum 1 especial character out of "(", ")", "/", "+", "-" or "."
+            9. The complex part has only 1 especial character out of "(", ")", "/", "+", "-" or "."
         This function was created for easy testing with unit testing
     :param num:
     :return: Boolean. True if there is an error in the input, False otherwise.
     '''
     allowd_spcial_chars = r'\(|\)|\/|\.|\+|\-|i|\d'
     not_allowd_spcial_chars = r'[^()i\/.+\-0-9]'
-    allowd_spcial_chars_list = [r"\(", r"\)", r"\/", r"\.", r"\+", r"\-", r"i"]
-    allowd_spcial_chars_num = [2, 2, 2, 2, 2, 2, 1]
+    allowd_spcial_chars_list = [r"\(", r"\)", r"\/", r"\.", r"\+|\-", r"i"]
+    allowd_spcial_chars_num = [2, 2, 2, 2, 2, 1]
 
     if ' ' in num:
         print("Whitespaces are not allowed.")
@@ -54,10 +55,6 @@ def is_input_wrong(num):
 
     # Checking the maximum number of special characters
     if exceeds_max_spcial_chars(num, allowd_spcial_chars_list, allowd_spcial_chars_num):
-        return True
-
-    if len(re.findall(r'\+|\-', num)) > 2:
-        print('Incorrect format. Please try again')
         return True
 
     if len(re.findall(r'(?:\+|\-){2,}', num)) > 0: # For patterns like 1--5i or ++1-5i
@@ -80,6 +77,13 @@ def is_input_wrong(num):
         # If the input is correct, real_complx_sepration() should output two numbers without the "i". See script
             # "tests_real_complx_sepration.py"
         print('Incorrect format. Please try again')
+        return True
+
+    allowd_spcial_chars_num = [1, 1, 1, 1, 1, 0] # Applies for either "real_prt" or "complx_prt"
+    if exceeds_max_spcial_chars(real_prt, allowd_spcial_chars_list, allowd_spcial_chars_num):
+        return True
+
+    if exceeds_max_spcial_chars(complx_prt, allowd_spcial_chars_list, allowd_spcial_chars_num):
         return True
 
     # If all the previous checks fail (Meaning no conditional succeeds), the input is ok and the outer while loop is
