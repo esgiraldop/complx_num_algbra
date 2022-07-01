@@ -76,7 +76,13 @@ def real_complx_sepration(num):
     return real_prt, complx_prt
 
 def decimal_2_frac(num):
-    ''' Function to transform from decimal to fraction'''
+    ''' Function to transform from decimal to fraction
+        This function:
+        1. Checks if there is a minus and saves it somewhere else
+        2. Splits the number in the integer and decimal parts (create function to separate this)
+        3. Transforms the decimal part into a fraction (Core of the function. It deserves to be in another function)
+        4. Adds the integer part to the fraction (Include function real_complx_sum)
+    '''
     pass
     return frac
 
@@ -247,7 +253,7 @@ def real_complx_div(num_1, num_2):
 
 if __name__ == '__main__':
     # Just for testing
-    num_2 = '5/1'
+    num_2 = '(5/1)'
     num_1 = '4+8i'
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
     print('The real part is: ', real_prt1)
