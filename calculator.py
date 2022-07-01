@@ -247,7 +247,7 @@ def real_complx_div(num_1, num_2):
 
 if __name__ == '__main__':
     # Just for testing
-    num_2 = '0'
+    num_2 = '5/1'
     num_1 = '4+8i'
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
     print('The real part is: ', real_prt1)

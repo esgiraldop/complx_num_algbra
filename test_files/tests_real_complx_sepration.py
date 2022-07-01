@@ -108,6 +108,21 @@ def test_real_complx_sepration_20():
     assert real_prt1 == '0' # Not a correct separation. This input is blocked from ask_usr.is_input_wrong()
     assert complx_prt1 == '-(5/6)'
 
+def test_real_complx_sepration_21():
+    real_prt1, complx_prt1 = real_complx_sepration('(5/1)-(5/6)i')
+    assert real_prt1 == '(5/1)'
+    assert complx_prt1 == '-(5/6)'
+
+def test_real_complx_sepration_22():
+    real_prt1, complx_prt1 = real_complx_sepration('5.1-(5/6)i')
+    assert real_prt1 == '5.1'
+    assert complx_prt1 == '-(5/6)'
+
+def test_real_complx_sepration_23():
+    real_prt1, complx_prt1 = real_complx_sepration('(5/6)-5.1i')
+    assert real_prt1 == '(5/6)'
+    assert complx_prt1 == '-5.1'
+
 if __name__ == '__main__':
     os.chdir('..') # For being able to debug while testing
     sys.exit(pytest.main(['-k', 'tests_real_complx_sepration.py'], plugins=[test_real_complx_sepration_20()]))
