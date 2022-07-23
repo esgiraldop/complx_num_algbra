@@ -75,6 +75,16 @@ def real_complx_sepration(num):
 
     return real_prt, complx_prt
 
+def split_decimal_int(num):
+    ''' Function to split a number into its integer and decimal part
+        :param:
+            num: String with the num to split
+        :return:
+            integ: String with the integer part. For numbers like 0.1, this number is 0
+            decim: String with the decimal part. For numbers like 1, this number is 0
+    '''
+    pass
+
 def decimal_2_frac(num):
     ''' Function to transform from decimal to fraction
         This function:
@@ -88,7 +98,11 @@ def decimal_2_frac(num):
             frac: String with the num transformed into fractional
     '''
 
-    return frac
+    sign = search_middle_sign(num)
+    if sign == '+':
+        sign = ''
+
+    return sign+frac
 
 def format_floatnum(num):
     '''
