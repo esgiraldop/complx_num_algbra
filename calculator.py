@@ -201,7 +201,7 @@ def smplfy_frctions(uppr_part, lwr_part):
     lwr_part = sign_lwr_part + str(int(lwr_part))
     return uppr_part, lwr_part
 
-def real_complx_sum(num_1, num_2):
+def real_complx_sum(real_prt1, complx_prt1, real_prt2, complx_prt2):
     # NOTE TO MYSELF: What if there are decimals?
     real_prt1, complx_prt1 = real_complx_sepration(num_1)
     real_prt2, complx_prt2 = real_complx_sepration(num_2)
@@ -210,18 +210,15 @@ def real_complx_sum(num_1, num_2):
 
     return join_real_complx_prts(real_prt, complx_prt)
 
-def real_complx_subs(num_1, num_2):
+def real_complx_subs(real_prt1, complx_prt1, real_prt2, complx_prt2):
     # NOTE TO MYSELF: What if there are decimals?
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    real_prt2, complx_prt2 = real_complx_sepration(num_2)
+
     real_prt = format_floatnum(float(real_prt1) - float(real_prt2))
     complx_prt = format_floatnum(float(complx_prt1) - float(complx_prt2))
 
     return join_real_complx_prts(real_prt, complx_prt)
 
-def real_complx_mult(num_1, num_2):
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    real_prt2, complx_prt2 = real_complx_sepration(num_2)
+def real_complx_mult(real_prt1, complx_prt1, real_prt2, complx_prt2):
     term1 = format_floatnum(float(real_prt1) * float(real_prt2))
     term2 = format_floatnum(float(real_prt1) * float(complx_prt2))
     term3 = format_floatnum(float(complx_prt1) * float(real_prt2))
@@ -231,9 +228,7 @@ def real_complx_mult(num_1, num_2):
 
     return join_real_complx_prts(real_prt, complx_prt)
 
-def real_complx_div(num_1, num_2):
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    real_prt2, complx_prt2 = real_complx_sepration(num_2)
+def real_complx_div(real_prt1, complx_prt1, real_prt2, complx_prt2):
 
     if real_prt1 == '0' and complx_prt1 == '0':
         return '0'
