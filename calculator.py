@@ -75,6 +75,16 @@ def real_complx_sepration(num):
 
     return real_prt, complx_prt
 
+def is_fraction(num):
+    '''
+        Function for checking whether the number is a fraction or not
+        :param:
+            num: String
+        :return:
+            Boolean. True for fraction, False otherwise
+    '''
+    return True
+
 def decimal_2_frac(num):
     ''' Function to transform from decimal to fraction. Integers are transformed as well. "1" --> "(1/1)"
         This function:
@@ -88,22 +98,24 @@ def decimal_2_frac(num):
             frac: String with the num transformed into fractional
     '''
 
-    sign = search_middle_sign(num) # If I used num[0] to retrieve the sign, it would no work for cases like "1.54"
+    if is_fraction(num) == False:
+        sign = search_middle_sign(num) # If I used num[0] to retrieve the sign, it would no work for cases like "1.54"
 
-    if sign == '+':
-        sign = ''
+        if sign == '-' or sign == '+':
+            num = num[0:1]
+            if sign == '+':
+                sign = ''
 
-    if sign == '-' or sign == '+':
-        num = num[0:1]
+        partition = num.partition('.')
+        integ = partition[0]
+        decim = partition[2]
+        decim_frac = f'({decim}/1'+'0'*len(decim)+')'
+        int_frac = f'({integ}/1)'
+        frac = sum_frac(int_frac, decim_frac)
 
-    partition = num.partition('.')
-    integ = partition[0]
-    decim = partition[2]
+        return sign+frac
 
-    decim_frac = f'({decim}/1'+'0'*len(decim)+')'
-    int_frac = f'({integ}/1)'
-
-    return sign+frac
+    return num # If the number was entered as a fraction by the user, there is no need to transform it
 
 def format_floatnum(num):
     '''
@@ -206,6 +218,47 @@ def smplfy_frctions(uppr_part, lwr_part):
     lwr_part = sign_lwr_part + str(int(lwr_part))
     return uppr_part, lwr_part
 
+def LCM(num1, num2):
+    '''
+        Function to find the lowest common multiple (LCM) of two numbers
+        :param:
+            num1, num2: Integer numbers
+        :return:
+            num: Integer representing the LCM of num1 and num2. Returns None if one of the numbers is zero
+    '''
+    if num1 == 0 or num2 == 0:
+        return None
+
+    if num1 < 0:
+        num1 = num1 * -1
+    elif num2 < 0:
+        num2 = num2 * -1
+    elif num1 < 0 and num2 < 0:
+        num1 = num1 * -1
+        num2 = num2 * -1
+
+    if num1 < num2:
+        lower = num1
+        upper = num2
+    else:
+        lower = num2
+        upper = num1
+
+    mult_low = lower
+    mult_upp = upper
+    count_low = 1
+    count_upp = 1
+    while mult_low < mult_upp:
+        if mult_low == mult_upp:
+            break
+        mult_low = lower*count_low
+        count_low += 1
+        if mult_low > mult_upp:
+            count_upp += 1
+            mult_upp = upper*count_upp
+
+    return mult_low
+
 def sum_frac(num1, num2):
     '''
         Function to add two fractions
@@ -241,7 +294,7 @@ def real_complx_mult(real_prt1, complx_prt1, real_prt2, complx_prt2):
 
     return join_real_complx_prts(real_prt, complx_prt)
 
-def real_complx_div(real_prt1, complx_prt1, real_prt2, complx_prt2):
+def real_complx_div(num_1, num_2, real_prt1, complx_prt1, real_prt2, complx_prt2):
 
     if real_prt1 == '0' and complx_prt1 == '0':
         return '0'
@@ -277,17 +330,20 @@ def real_complx_div(real_prt1, complx_prt1, real_prt2, complx_prt2):
 
 if __name__ == '__main__':
     # Just for testing
-    num_2 = '(5/1)'
-    num_1 = '4+8i'
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    print('The real part is: ', real_prt1)
-    print('The complex part is: ', complx_prt1)
-    print('The middle sign is: ', search_middle_sign(num_1))
-    result = real_complx_sum(num_1, num_2)
-    print('The result of the sum is: ', result)
-    result = real_complx_subs(num_1, num_2)
-    print('The result of the subtraction is: ', result)
-    result = real_complx_mult(num_1, num_2)
-    print('The result of the multiplication is: ', result)
-    result = real_complx_div(num_1, num_2)
-    print('The result of the division is: ', result)
+    num1 = 1; num2 = 1
+    lcm = LCM(num1, num2)
+    print(f'The LCM between {num1} and {num2} is {lcm}')
+    # num_2 = '(5/1)'
+    # num_1 = '4+8i'
+    # real_prt1, complx_prt1 = real_complx_sepration(num_1)
+    # print('The real part is: ', real_prt1)
+    # print('The complex part is: ', complx_prt1)
+    # print('The middle sign is: ', search_middle_sign(num_1))
+    # result = real_complx_sum(num_1, num_2)
+    # print('The result of the sum is: ', result)
+    # result = real_complx_subs(num_1, num_2)
+    # print('The result of the subtraction is: ', result)
+    # result = real_complx_mult(num_1, num_2)
+    # print('The result of the multiplication is: ', result)
+    # result = real_complx_div(num_1, num_2)
+    # print('The result of the division is: ', result)
