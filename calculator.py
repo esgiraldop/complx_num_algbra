@@ -82,8 +82,12 @@ def decimal_2_frac(num):
         2. Splits the number in the integer and decimal parts (create function to separate this)
         3. Transforms the decimal part into a fraction (Core of the function. It deserves to be in another function)
         4. Adds the integer part to the fraction (Include function real_complx_sum)
+        :param:
+            num: String with the num to transform to fractional
+        :return:
+            frac: String with the num transformed into fractional
     '''
-    pass
+
     return frac
 
 def format_floatnum(num):
