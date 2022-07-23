@@ -10,7 +10,7 @@ num_2 = ask_usr.ask_num()
 # Separating real and complex parts
 real_prt1, complx_prt1 = real_complx_sepration(num_1)
 real_prt2, complx_prt2 = real_complx_sepration(num_2)
-# Transforming into fractions (If there are decimals)
+# Transforming into fractions.
 
 
 # Carrying out the four operations between the complex numbers entered by the user

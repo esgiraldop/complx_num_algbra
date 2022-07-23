@@ -76,10 +76,10 @@ def real_complx_sepration(num):
     return real_prt, complx_prt
 
 def decimal_2_frac(num):
-    ''' Function to transform from decimal to fraction
+    ''' Function to transform from decimal to fraction. Integers are transformed as well. "1" --> "(1/1)"
         This function:
         1. Checks if there is a minus and saves it somewhere else
-        2. Splits the number in the integer and decimal parts (create function to separate this)
+        2. Splits the number in the integer and decimal parts
         3. Transforms the decimal part into a fraction (Core of the function. It deserves to be in another function)
         4. Adds the integer part to the fraction (Include function real_complx_sum)
         :param:
@@ -100,13 +100,18 @@ def decimal_2_frac(num):
     integ = partition[0]
     decim = partition[2]
 
+    decim_frac = f'({decim}/1'+'0'*len(decim)+')'
+    int_frac = f'({integ}/1)'
+
     return sign+frac
 
 def format_floatnum(num):
     '''
         Function for formatting numbers. If there is a number like "5.0i", it is formatted to "5i"
-        :param num:
+        :param:
+            num: Integer or float number
         :return:
+            num: Integer or float number depending on whether the condition is met or not
     '''
     if num - int(num) == 0:
         return int(num)
@@ -201,10 +206,18 @@ def smplfy_frctions(uppr_part, lwr_part):
     lwr_part = sign_lwr_part + str(int(lwr_part))
     return uppr_part, lwr_part
 
+def sum_frac(num1, num2):
+    '''
+        Function to add two fractions
+        :param:
+            num1, num2: Strings with the fractions
+        :return:
+            frac: Result in simplified fraction
+    '''
+    pass
+
 def real_complx_sum(real_prt1, complx_prt1, real_prt2, complx_prt2):
     # NOTE TO MYSELF: What if there are decimals?
-    real_prt1, complx_prt1 = real_complx_sepration(num_1)
-    real_prt2, complx_prt2 = real_complx_sepration(num_2)
     real_prt = format_floatnum(float(real_prt1) + float(real_prt2))
     complx_prt = format_floatnum(float(complx_prt1) + float(complx_prt2))
 
